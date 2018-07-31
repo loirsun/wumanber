@@ -171,18 +171,16 @@ func (w *WuManber) Serialize(path string) error {
 
 	// write Hash table to buffer
 	for i := range w.HashTable {
-		fmt.Println(len(w.HashTable[i]))
+		//fmt.Println(len(w.HashTable[i]))
 		binary.Write(&binBuf, binary.BigEndian, int32(len(w.HashTable[i])))
 		for j := range w.HashTable[i] {
 			binary.Write(&binBuf, binary.BigEndian, w.HashTable[i][j])
-			//binary.Write(&binBuf, binary.BigEndian, w.HashTable[i][j].Index)
 		}
 	}
 
 	binary.Write(&binBuf, binary.BigEndian, int32(len(w.Patterns)))
 	for i := range w.Patterns {
 		binary.Write(&binBuf, binary.BigEndian, int32(len(w.Patterns[i])))
-		//binary.Write(&binBuf, binary.BigEndian, w.Patterns[i])
 		binBuf.Write([]byte(w.Patterns[i]))
 	}
 	file.Write(binBuf.Bytes())
