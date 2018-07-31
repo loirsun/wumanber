@@ -133,8 +133,8 @@ func (w *WuManber) Search(text string) int {
 			prefixHashIndex := prefixHash % uint32(w.TableSize)
 			var p *PrefixTable = &(w.HashTable[prefixHashIndex])
 			for _, pp := range *p {
-				fmt.Println(pp.Hash)
-				fmt.Println(pp.Index)
+				//fmt.Println(pp.Hash)
+				//fmt.Println(pp.Index)
 
 				if prefixHash == pp.Hash {
 					// since prefindex matches, compare target substring with pattern
