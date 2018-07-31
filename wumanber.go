@@ -14,7 +14,7 @@ func HashCode(str string) uint32 {
 	for i := range str {
 		hash = uint32(str[i]) + (hash << 6) + (hash << 16) - hash
 	}
-	return (hash & 0x7FFFFFFF)
+	return hash & 0x7FFFFFFF
 }
 
 type PrefixIdPair struct {
@@ -217,7 +217,7 @@ func (w *WuManber) Deserialize(path string) error {
 	buffer = bytes.NewBuffer(data)
 	err = binary.Read(buffer, binary.BigEndian, &w.ShiftTable)
 
-	log.Println("successfuly deserialize SHIFT table")
+	log.Println("successfully deserialize SHIFT table")
 
 	w.HashTable = make([]PrefixTable, w.TableSize)
 	var sizeOfPrefixIdPair int = 8
@@ -233,7 +233,7 @@ func (w *WuManber) Deserialize(path string) error {
 		err = binary.Read(buffer, binary.BigEndian, &w.HashTable[i])
 	}
 
-	log.Println("successfuly deserialize Hash table")
+	log.Println("successfully deserialize Hash table")
 
 	var patternSize int32 = 0
 
@@ -253,7 +253,7 @@ func (w *WuManber) Deserialize(path string) error {
 		//err = binary.Read(buffer, binary.BigEndian, &w.Patterns[i])
 		w.Patterns[i] = string(buffer.Bytes())
 	}
-	log.Println("successfuly deserialize patterns")
+	log.Println("successfully deserialize patterns")
 	return nil
 }
 
