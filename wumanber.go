@@ -184,6 +184,7 @@ func (w *WuManber) Serialize(path string) error {
 		binBuf.Write([]byte(w.Patterns[i]))
 	}
 	file.Write(binBuf.Bytes())
+	log.Println("Serialize WuManber model successfully.")
 	return nil
 }
 
@@ -197,26 +198,26 @@ func (w *WuManber) Deserialize(path string) error {
 	buffer := bytes.NewBuffer(data)
 	err = binary.Read(buffer, binary.BigEndian, &w.Min)
 
-	fmt.Println(w.Min)
+	//fmt.Println(w.Min)
 
 	data = readNextBytes(file, 4)
 	buffer = bytes.NewBuffer(data)
 	err = binary.Read(buffer, binary.BigEndian, &w.TableSize)
 
-	fmt.Println(w.TableSize)
+	//fmt.Println(w.TableSize)
 
 	data = readNextBytes(file, 4)
 	buffer = bytes.NewBuffer(data)
 	err = binary.Read(buffer, binary.BigEndian, &w.Block)
 
-	fmt.Println(w.Block)
+	//fmt.Println(w.Block)
 
 	w.ShiftTable = make([]int32, w.TableSize)
 	data = readNextBytes(file, 4 * int(w.TableSize))
 	buffer = bytes.NewBuffer(data)
 	err = binary.Read(buffer, binary.BigEndian, &w.ShiftTable)
 
-	fmt.Println("successfuly deserialize SHIFT table")
+	log.Println("successfuly deserialize SHIFT table")
 
 	w.HashTable = make([]PrefixTable, w.TableSize)
 	var sizeOfPrefixIdPair int = 8
@@ -232,7 +233,7 @@ func (w *WuManber) Deserialize(path string) error {
 		err = binary.Read(buffer, binary.BigEndian, &w.HashTable[i])
 	}
 
-	fmt.Println("successfuly deserialize Hash table")
+	log.Println("successfuly deserialize Hash table")
 
 	var patternSize int32 = 0
 
@@ -252,7 +253,7 @@ func (w *WuManber) Deserialize(path string) error {
 		//err = binary.Read(buffer, binary.BigEndian, &w.Patterns[i])
 		w.Patterns[i] = string(buffer.Bytes())
 	}
-	fmt.Println("successfuly deserialize patterns")
+	log.Println("successfuly deserialize patterns")
 	return nil
 }
 
