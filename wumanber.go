@@ -46,7 +46,7 @@ func (w *WuManber) Init(patterns []string) error {
 
 	patternSize := int32(len(patterns))
 	if patternSize == 0 {
-		return errors.New("wumanber init failed because no pattern specified.")
+		return errors.New("WuManber init failed because no pattern specified")
 	}
 
 	w.Patterns = make([]string, patternSize)
@@ -63,7 +63,7 @@ func (w *WuManber) Init(patterns []string) error {
 	}
 
 	if w.Block > w.Min {
-		fmt.Println("Warning: Block is larger than minum pattern length, reset mBlock to minmum, but it will seriously affect the effiency.")
+		log.Println("Warning: Block is larger than minum pattern length, reset mBlock to minmum, but it will seriously affect the effiency.")
 		w.Block = w.Min
 	}
 
@@ -77,7 +77,7 @@ func (w *WuManber) Init(patterns []string) error {
 	}
 
 	if w.TableSize == 0 {
-		fmt.Println("Warning: amount of pattern is very large, will cost a great amount of memory.")
+		log.Println("Warning: amount of pattern is very large, will cost a great amount of memory.")
 		w.TableSize = primes[5]
 	}
 	//fmt.Println(w.TableSize)
