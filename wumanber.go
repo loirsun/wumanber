@@ -103,7 +103,7 @@ func (w *WuManber) Init(patterns []string) error {
 				w.ShiftTable[hashCode] = w.Min - index
 			}
 			if index == w.Min {
-				prefixHash := HashCode(patterns[id][:w.Block])
+				prefixHash := HashCode(patterns[id][0:w.Block])
 				//prefixHash
 				w.HashTable[hashCode] = append(w.HashTable[hashCode], PrefixIdPair{prefixHash, int32(id)})
 			}
@@ -129,19 +129,24 @@ func (w *WuManber) Search(text string) int {
 			index += shift
 		} else {
 			prefixHash := HashCode(text[index - windowMaxIndex:index-windowMaxIndex+w.Block])
-			prefixHashIndex := prefixHash % uint32(w.TableSize)
-			var p *PrefixTable = &(w.HashTable[prefixHashIndex])
+			var p = &(w.HashTable[blockHash])
 			for _, pp := range *p {
-				//fmt.Println(pp.Hash)
-				//fmt.Println(pp.Index)
-
 				if prefixHash == pp.Hash {
 					// since prefindex matches, compare target substring with pattern
 					// we know first two characters already match
 					lenPattern := len(w.Patterns[pp.Index])
-					target := text[index - windowMaxIndex:index - windowMaxIndex+ int32(lenPattern)]
-					if target == w.Patterns[pp.Index] {
+					var i = index - windowMaxIndex
+					var j = 0
+					for ; i < textLength && j < lenPattern; {
+						if w.Patterns[pp.Index][j] != text[i] {
+							break
+						}
+						i++
+						j++
+					}
+					if j == lenPattern {
 						hits++
+						//log.Println(w.Patterns[pp.Index])
 					}
 				}
 			} // end for
