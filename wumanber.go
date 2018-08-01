@@ -2,7 +2,6 @@ package wumanber
 
 import (
 	"errors"
-	"fmt"
 	"os"
 	"bytes"
 	"encoding/binary"
@@ -247,7 +246,6 @@ func (w *WuManber) Deserialize(path string) error {
 		data = readNextBytes(file, 4)
 		buffer = bytes.NewBuffer(data)
 		err = binary.Read(buffer, binary.BigEndian, &l)
-		fmt.Println(l)
 		data = readNextBytes(file, int(l))
 		buffer = bytes.NewBuffer(data)
 		//err = binary.Read(buffer, binary.BigEndian, &w.Patterns[i])
